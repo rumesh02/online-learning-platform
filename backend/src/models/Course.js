@@ -16,7 +16,7 @@ const courseSchema = new mongoose.Schema({
       'Machine Learning',
       'Design',
       'Business',
-      'Marketing',
+      'Other',
       'Programming'
     ]
   },
