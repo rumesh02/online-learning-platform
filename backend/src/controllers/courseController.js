@@ -1,4 +1,5 @@
 const Course = require('../models/Course');
+const Enrollment = require('../models/Enrollment');
 const { validationResult } = require('express-validator');
 
 // @desc    Create a new course
@@ -69,6 +70,87 @@ exports.getInstructorCourses = async (req, res) => {
       success: true,
       count: courses.length,
       data: courses
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+// @desc    Update a course
+// @route   PUT /api/courses/:id
+// @access  Private (Instructor only - own courses)
+exports.updateCourse = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: 'Course not found'
+      });
+    }
+
+    // Check if user is the course instructor
+    if (course.instructor.toString() !== req.user._id.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: 'Not authorized to update this course'
+      });
+    }
+
+    const { title, category, description, content } = req.body;
+    const updatedCourse = await Course.findByIdAndUpdate(
+      req.params.id,
+      { title, category, description, content },
+      { new: true, runValidators: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      data: updatedCourse
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+// @desc    Delete a course
+// @route   DELETE /api/courses/:id
+// @access  Private (Instructor only - own courses)
+exports.deleteCourse = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: 'Course not found'
+      });
+    }
+
+    // Check if user is the course instructor
+    if (course.instructor.toString() !== req.user._id.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: 'Not authorized to delete this course'
+      });
+    }
+
+    // Delete all enrollments for this course
+    await Enrollment.deleteMany({ course: req.params.id });
+
+    // Delete the course
+    await Course.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({
+      success: true,
+      message: 'Course and related enrollments deleted successfully'
     });
   } catch (error) {
     res.status(500).json({

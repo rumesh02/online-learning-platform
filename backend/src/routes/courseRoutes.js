@@ -4,7 +4,9 @@ const { protect, authorize } = require('../middleware/auth');
 const {
   createCourse,
   getAllCourses,
-  getInstructorCourses
+  getInstructorCourses,
+  updateCourse,
+  deleteCourse
 } = require('../controllers/courseController');
 
 const router = express.Router();
@@ -23,5 +25,7 @@ router.get('/', getAllCourses);
 // Protected routes - Instructor only
 router.post('/', protect, authorize('instructor'), courseValidation, createCourse);
 router.get('/my-courses', protect, authorize('instructor'), getInstructorCourses);
+router.put('/:id', protect, authorize('instructor'), updateCourse);
+router.delete('/:id', protect, authorize('instructor'), deleteCourse);
 
 module.exports = router;
