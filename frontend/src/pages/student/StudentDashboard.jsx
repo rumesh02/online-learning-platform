@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, CheckCircle, BookOpenCheck, Search, FileEdit } from 'lucide-react';
+import { BookOpen, CheckCircle, BookOpenCheck, Search, FileEdit, Sparkles } from 'lucide-react';
 import StudentHeader from '../../components/common/StudentHeader';
 import Button from '../../components/common/Button';
 
@@ -46,6 +46,36 @@ const StudentDashboard = () => {
                 <p className="text-3xl font-bold text-gray-800">0</p>
               </div>
               <BookOpenCheck className="w-10 h-10 text-yellow-600" />
+            </div>
+          </div>
+        </div>
+
+        {/* AI Course Suggestions - Featured Section */}
+        <div className="relative mb-8 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 animate-pulse opacity-20 blur-xl"></div>
+          <div className="relative bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl shadow-xl p-5 border-2 border-yellow-300">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="flex-1 text-black/85">
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="p-1.5 bg-white/20 rounded-lg backdrop-blur-sm">
+                    <Sparkles className="w-6 h-6 text-black animate-pulse" />
+                  </div>
+                  <h3 className="text-xl font-bold">AI-Powered Course Recommendations</h3>
+                </div>
+                <p className="text-black/90 text-base">
+                  Not sure what to learn next? Let our AI suggest personalized courses based on your goals!
+                </p>
+              </div>
+              <button
+                onClick={() => navigate('/student/ai-suggestions')}
+                className="group relative px-6 py-3 bg-white text-gray-900 rounded-lg font-bold shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 whitespace-nowrap"
+              >
+                <span className="absolute inset-0 bg-gradient-to-r from-yellow-300 to-orange-300 rounded-lg blur-lg opacity-50 group-hover:opacity-75 animate-pulse"></span>
+                <span className="relative flex items-center gap-2">
+                  <Sparkles className="w-5 h-5" />
+                  Get AI Suggestions
+                </span>
+              </button>
             </div>
           </div>
         </div>

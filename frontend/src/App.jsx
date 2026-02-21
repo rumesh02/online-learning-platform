@@ -6,6 +6,7 @@ import Login from './pages/auth/Login';
 import StudentDashboard from './pages/student/StudentDashboard';
 import BrowseCourses from './pages/student/BrowseCourses';
 import EnrolledCourses from './pages/student/EnrolledCourses';
+import AICourseSuggestions from './pages/student/AICourseSuggestions';
 import InstructorDashboard from './pages/instructor/InstructorDashboard';
 import CreateCourse from './pages/instructor/CreateCourse';
 import MyCourses from './pages/instructor/MyCourses';
@@ -56,6 +57,15 @@ function App() {
           element={
             <ProtectedRoute allowedRole="student">
               <EnrolledCourses />
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/student/ai-suggestions"
+          element={
+            <ProtectedRoute allowedRole="student">
+              <AICourseSuggestions />
             </ProtectedRoute>
           }
         />
