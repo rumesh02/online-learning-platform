@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, GraduationCap, UserRoundPen, Check } from 'lucide-react';
+import { BookOpen, Check } from 'lucide-react';
 import Button from '../components/common/Button';
 
 const Home = () => {
@@ -49,7 +49,7 @@ const Home = () => {
         <div className="grid md:grid-cols-2 gap-8 mt-20">
           <div className="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-shadow">
             <div className="flex justify-center mb-4">
-              <GraduationCap className="w-16 h-16 text-yellow-600" />
+              <img src="/images/student.png" alt="Student" className="w-24 h-24 object-contain" />
             </div>
             <h3 className="text-2xl font-bold text-gray-800 mb-3">For Students</h3>
             <ul className="text-gray-600 space-y-2">
@@ -65,7 +65,7 @@ const Home = () => {
 
           <div className="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-shadow">
             <div className="flex justify-center mb-4">
-              <UserRoundPen className="w-16 h-16 text-yellow-600" />
+              <img src="/images/instructor.png" alt="Instructor" className="w-24 h-24 object-contain" />
             </div>
             <h3 className="text-2xl font-bold text-gray-800 mb-3">For Instructors</h3>
             <ul className="text-gray-600 space-y-2">
