@@ -6,6 +6,7 @@ import Login from './pages/auth/Login';
 import StudentDashboard from './pages/student/StudentDashboard';
 import InstructorDashboard from './pages/instructor/InstructorDashboard';
 import CreateCourse from './pages/instructor/CreateCourse';
+import MyCourses from './pages/instructor/MyCourses';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, allowedRole }) => {
@@ -53,6 +54,15 @@ function App() {
           element={
             <ProtectedRoute allowedRole="instructor">
               <CreateCourse />
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/instructor/my-courses"
+          element={
+            <ProtectedRoute allowedRole="instructor">
+              <MyCourses />
             </ProtectedRoute>
           }
         />
