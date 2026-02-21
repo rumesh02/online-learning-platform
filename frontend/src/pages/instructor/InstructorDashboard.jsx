@@ -11,6 +11,10 @@ const InstructorDashboard = () => {
     navigate('/login');
   };
 
+  const handleCreateCourse = () => {
+    navigate('/instructor/create-course');
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -80,7 +84,7 @@ const InstructorDashboard = () => {
         <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
           <h3 className="text-xl font-bold text-gray-800 mb-4">Quick Actions</h3>
           <div className="grid md:grid-cols-3 gap-4">
-            <button className="p-4 border-2 border-gray-200 rounded-lg hover:border-yellow-500 hover:bg-yellow-50 transition-all text-left">
+            <button onClick={handleCreateCourse} className="p-4 border-2 border-gray-200 rounded-lg hover:border-yellow-500 hover:bg-yellow-50 transition-all text-left">
               <div className="text-2xl mb-2">➕</div>
               <h4 className="font-semibold text-gray-800">Create New Course</h4>
               <p className="text-sm text-gray-600">Start building your next course</p>
@@ -105,7 +109,7 @@ const InstructorDashboard = () => {
           <h3 className="text-xl font-bold text-gray-800 mb-4">My Courses</h3>
           <div className="text-center py-8 text-gray-500">
             <p>No courses created yet. Create your first course to get started!</p>
-            <Button className="mt-4">Create Your First Course</Button>
+            <Button onClick={handleCreateCourse} className="mt-4">Create Your First Course</Button>
           </div>
         </div>
       </main>
