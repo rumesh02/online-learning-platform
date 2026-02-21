@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { BookOpen } from 'lucide-react';
 import Button from '../../components/common/Button';
 import Input from '../../components/common/Input';
 
@@ -58,7 +59,10 @@ const CreateCourse = () => {
       {/* Header */}
       <header className="bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-800">📚 Create New Course</h1>
+          <div className="flex items-center gap-2">
+            <BookOpen className="w-6 h-6 text-yellow-600" />
+            <h1 className="text-2xl font-bold text-gray-800">Create New Course</h1>
+          </div>
           <Button onClick={() => navigate('/instructor/dashboard')} variant="outline">
             Back to Dashboard
           </Button>

@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { BookOpen, GraduationCap, UserRoundPen, Check } from 'lucide-react';
 import Button from '../components/common/Button';
 
 const Home = () => {
@@ -9,7 +10,10 @@ const Home = () => {
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-800">📚 LearnHub</h1>
+          <div className="flex items-center gap-2">
+            <BookOpen className="w-6 h-6 text-yellow-600" />
+            <h1 className="text-2xl font-bold text-gray-800">LearnHub</h1>
+          </div>
           <div className="flex gap-3">
             <Button onClick={() => navigate('/login')} variant="outline">
               Login
@@ -44,13 +48,15 @@ const Home = () => {
         {/* Features */}
         <div className="grid md:grid-cols-2 gap-8 mt-20">
           <div className="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-shadow">
-            <div className="text-5xl mb-4">🎓</div>
+            <div className="flex justify-center mb-4">
+              <GraduationCap className="w-16 h-16 text-yellow-600" />
+            </div>
             <h3 className="text-2xl font-bold text-gray-800 mb-3">For Students</h3>
             <ul className="text-gray-600 space-y-2">
-              <li>✓ Access thousands of courses</li>
-              <li>✓ Learn at your own pace</li>
-              <li>✓ Track your progress</li>
-              <li>✓ Get personalized recommendations</li>
+              <li className="flex items-center gap-2"><Check className="w-5 h-5 text-green-600" /> Access thousands of courses</li>
+              <li className="flex items-center gap-2"><Check className="w-5 h-5 text-green-600" /> Learn at your own pace</li>
+              <li className="flex items-center gap-2"><Check className="w-5 h-5 text-green-600" /> Track your progress</li>
+              <li className="flex items-center gap-2"><Check className="w-5 h-5 text-green-600" /> Get personalized recommendations</li>
             </ul>
             <Button onClick={() => navigate('/signup')} className="mt-6 w-full">
               Start Learning
@@ -58,13 +64,15 @@ const Home = () => {
           </div>
 
           <div className="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-shadow">
-            <div className="text-5xl mb-4">👨‍🏫</div>
+            <div className="flex justify-center mb-4">
+              <UserRoundPen className="w-16 h-16 text-yellow-600" />
+            </div>
             <h3 className="text-2xl font-bold text-gray-800 mb-3">For Instructors</h3>
             <ul className="text-gray-600 space-y-2">
-              <li>✓ Create and sell courses</li>
-              <li>✓ Reach global audience</li>
-              <li>✓ Track student progress</li>
-              <li>✓ Build your brand</li>
+              <li className="flex items-center gap-2"><Check className="w-5 h-5 text-green-600" /> Create and sell courses</li>
+              <li className="flex items-center gap-2"><Check className="w-5 h-5 text-green-600" /> Reach global audience</li>
+              <li className="flex items-center gap-2"><Check className="w-5 h-5 text-green-600" /> Track student progress</li>
+              <li className="flex items-center gap-2"><Check className="w-5 h-5 text-green-600" /> Build your brand</li>
             </ul>
             <Button onClick={() => navigate('/signup')} className="mt-6 w-full">
               Start Teaching
