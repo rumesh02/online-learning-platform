@@ -74,7 +74,7 @@ const StudentDashboard = () => {
         <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
           <h3 className="text-xl font-bold text-gray-800 mb-4">Student Actions</h3>
           <div className="grid md:grid-cols-2 gap-4">
-            <button className="p-4 border-2 border-gray-200 rounded-lg hover:border-yellow-500 hover:bg-yellow-50 transition-all text-left">
+            <button onClick={() => navigate('/student/browse-courses')} className="p-4 border-2 border-gray-200 rounded-lg hover:border-yellow-500 hover:bg-yellow-50 transition-all text-left">
               <Search className="w-8 h-8 mb-2 text-yellow-600" />
               <h4 className="font-semibold text-gray-800">Browse Courses</h4>
               <p className="text-sm text-gray-600">Discover new learning opportunities</p>
