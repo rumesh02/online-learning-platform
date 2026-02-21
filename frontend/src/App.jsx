@@ -5,6 +5,7 @@ import Signup from './pages/auth/Signup';
 import Login from './pages/auth/Login';
 import StudentDashboard from './pages/student/StudentDashboard';
 import BrowseCourses from './pages/student/BrowseCourses';
+import EnrolledCourses from './pages/student/EnrolledCourses';
 import InstructorDashboard from './pages/instructor/InstructorDashboard';
 import CreateCourse from './pages/instructor/CreateCourse';
 import MyCourses from './pages/instructor/MyCourses';
@@ -46,6 +47,15 @@ function App() {
           element={
             <ProtectedRoute allowedRole="student">
               <BrowseCourses />
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/student/enrolled-courses"
+          element={
+            <ProtectedRoute allowedRole="student">
+              <EnrolledCourses />
             </ProtectedRoute>
           }
         />
