@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { UserRoundPen, BookOpen, Users, BookOpenCheck, Star, Plus, BarChart3, MessageCircle } from 'lucide-react';
+import { UserRoundPen, BookOpen, Users, BookOpenCheck, Plus, FileEdit } from 'lucide-react';
 import { logout } from '../../utils/auth';
 import Button from '../../components/common/Button';
 
@@ -84,7 +84,7 @@ const InstructorDashboard = () => {
               <p className="text-sm text-gray-600">Start building your next course</p>
             </button>
             
-            <button className="p-4 border-2 border-gray-200 rounded-lg hover:border-yellow-500 hover:bg-yellow-50 transition-all text-left">
+            <button onClick={() => navigate('/instructor/my-courses')} className="p-4 border-2 border-gray-200 rounded-lg hover:border-yellow-500 hover:bg-yellow-50 transition-all text-left">
               <FileEdit className="w-8 h-8 mb-2 text-yellow-600" />
               <h4 className="font-semibold text-gray-800">My Courses</h4>
               <p className="text-sm text-gray-600">View and manage your courses</p>
