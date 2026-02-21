@@ -198,4 +198,163 @@ curl -X GET http://localhost:5000/api/test/student-only \
 ✅ Protected routes
 ✅ Input validation with express-validator
 ✅ Secure password comparison
-✅ Token expiration (7 days default)
+✅ Token expiration (7 days default)✅ ChatGPT-powered course recommendations
+✅ Personalized AI assistance
+✅ API request logging and tracking
+
+## ChatGPT Recommendation API
+
+### Setup
+
+Add your OpenAI API key to the `.env` file:
+
+```
+OPENAI_API_KEY=your_openai_api_key_here
+```
+
+### 7. Get Course Recommendations
+
+**POST** `/api/recommendations/courses`
+
+**Headers:**
+
+```
+Authorization: Bearer <your_jwt_token>
+Content-Type: application/json
+```
+
+**Request Body:**
+
+```json
+{
+  "prompt": "I want to become a software engineer"
+}
+```
+
+**Success Response (200):**
+
+```json
+{
+  "success": true,
+  "data": {
+    "recommendations": "- React Fundamentals\n- Node.js Backend\n- Database Design",
+    "recommendedCourses": [
+      {
+        "_id": "course_id_1",
+        "title": "React Fundamentals",
+        "category": "Web Development",
+        "description": "Learn frontend development",
+        "instructor": {
+          "_id": "instructor_id",
+          "name": "Jane Smith",
+          "email": "jane@example.com"
+        }
+      }
+    ],
+    "totalRequestCount": 1,
+    "prompt": "I want to become a software engineer"
+  },
+  "message": "Course recommendations generated successfully"
+}
+```
+
+**curl Example:**
+
+```bash
+curl -X POST http://localhost:5000/api/recommendations/courses \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d "{\"prompt\":\"I want to become a software engineer\"}"
+```
+
+### 8. Get Personalized Assistance
+
+**POST** `/api/recommendations/assistance`
+
+**Headers:**
+
+```
+Authorization: Bearer <your_jwt_token>
+Content-Type: application/json
+```
+
+**Request Body:**
+
+```json
+{
+  "question": "What programming language should I learn first?"
+}
+```
+
+**Success Response (200):**
+
+```json
+{
+  "success": true,
+  "data": {
+    "response": "For beginners, I recommend starting with Python...",
+    "totalRequestCount": 2,
+    "question": "What programming language should I learn first?"
+  },
+  "message": "Assistance provided successfully"
+}
+```
+
+**curl Example:**
+
+```bash
+curl -X POST http://localhost:5000/api/recommendations/assistance \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d "{\"question\":\"What programming language should I learn first?\"}"
+```
+
+### 9. Get API Request Statistics
+
+**GET** `/api/recommendations/stats`
+
+**Headers:**
+
+```
+Authorization: Bearer <your_jwt_token>
+```
+
+**Description:** Retrieves statistics about all ChatGPT API requests made. Essential for tracking request count for final submission.
+
+**Success Response (200):**
+
+```json
+{
+  "success": true,
+  "data": {
+    "totalRequests": 5,
+    "recentRequests": [
+      {
+        "timestamp": "2026-02-21T10:30:00.000Z",
+        "endpoint": "getCourseRecommendations",
+        "userId": "user_id",
+        "prompt": "I want to become a software engineer",
+        "success": true,
+        "error": null
+      }
+    ],
+    "allRequests": []
+  },
+  "message": "API request statistics retrieved successfully"
+}
+```
+
+**curl Example:**
+
+```bash
+curl -X GET http://localhost:5000/api/recommendations/stats \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+### Important Notes for ChatGPT API:
+
+1. **Request Logging**: All API calls to ChatGPT are automatically logged in `backend/logs/api-requests.json`
+2. **No Loops**: The implementation fetches all courses once and structures them in a single prompt - no loops used
+3. **Structured Prompts**: User input is combined with available course data to create structured prompts
+4. **Request Count**: Use the `/stats` endpoint to get the total number of requests for your submission
+5. **Authentication Required**: All recommendation endpoints require a valid JWT token

@@ -1,13 +1,13 @@
+// Load environment variables first
+require('dotenv').config();
+
 const express = require('express');
-const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('./config/database');
 const authRoutes = require('./routes/authRoutes');
 const courseRoutes = require('./routes/courseRoutes');
 const enrollmentRoutes = require('./routes/enrollmentRoutes');
-
-// Load environment variables
-dotenv.config();
+const recommendationRoutes = require('./routes/recommendationRoutes');
 
 // Connect to database
 connectDB();
@@ -27,6 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', authRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/enrollments', enrollmentRoutes);
+app.use('/api/recommendations', recommendationRoutes);
 
 // Health check route
 app.get('/health', (req, res) => {
