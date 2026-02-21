@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BookOpen } from 'lucide-react';
+import InstructorHeader from '../../components/common/InstructorHeader';
+import PageHeader from '../../components/common/PageHeader';
 import Button from '../../components/common/Button';
 import Input from '../../components/common/Input';
 
@@ -56,18 +58,8 @@ const CreateCourse = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <BookOpen className="w-6 h-6 text-yellow-600" />
-            <h1 className="text-2xl font-bold text-gray-800">Create New Course</h1>
-          </div>
-          <Button onClick={() => navigate('/instructor/dashboard')} variant="outline">
-            Back to Dashboard
-          </Button>
-        </div>
-      </header>
+      <InstructorHeader />
+      <PageHeader title="Create New Course" icon={BookOpen} backTo="/instructor/dashboard" />
 
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-4 py-8">

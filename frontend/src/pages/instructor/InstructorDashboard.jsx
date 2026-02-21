@@ -1,16 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import { UserRoundPen, BookOpen, Users, BookOpenCheck, Plus, FileEdit } from 'lucide-react';
-import { logout } from '../../utils/auth';
+import { BookOpen, Users, BookOpenCheck, Plus, FileEdit } from 'lucide-react';
+import InstructorHeader from '../../components/common/InstructorHeader';
 import Button from '../../components/common/Button';
 
 const InstructorDashboard = () => {
   const navigate = useNavigate();
-  const userName = localStorage.getItem('userName') || 'Instructor';
-
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
 
   const handleCreateCourse = () => {
     navigate('/instructor/create-course');
@@ -18,21 +12,7 @@ const InstructorDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <UserRoundPen className="w-6 h-6 text-yellow-600" />
-            <h1 className="text-2xl font-bold text-gray-800">Instructor Portal</h1>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="text-gray-600">Welcome, <strong>{userName}</strong></span>
-            <Button onClick={handleLogout} variant="outline">
-              Logout
-            </Button>
-          </div>
-        </div>
-      </header>
+      <InstructorHeader />
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-8">

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Users, Edit2, X, ArrowLeft } from 'lucide-react';
+import { BookOpen, Users, Edit2, X } from 'lucide-react';
+import InstructorHeader from '../../components/common/InstructorHeader';
+import PageHeader from '../../components/common/PageHeader';
 import Button from '../../components/common/Button';
 
 const MyCourses = () => {
@@ -102,15 +104,8 @@ const MyCourses = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center gap-4">
-          <button onClick={() => navigate('/instructor/dashboard')} className="text-gray-600 hover:text-gray-800">
-            <ArrowLeft className="w-6 h-6" />
-          </button>
-          <BookOpen className="w-6 h-6 text-yellow-600" />
-          <h1 className="text-2xl font-bold text-gray-800">My Courses</h1>
-        </div>
-      </header>
+      <InstructorHeader />
+      <PageHeader title="My Courses" icon={BookOpen} backTo="/instructor/dashboard" />
 
       <main className="max-w-7xl mx-auto px-4 py-8">
         {courses.length === 0 ? (

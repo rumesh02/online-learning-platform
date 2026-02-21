@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GraduationCap, BookOpen, ArrowLeft } from 'lucide-react';
-import { logout } from '../../utils/auth';
+import { BookOpen } from 'lucide-react';
+import StudentHeader from '../../components/common/StudentHeader';
+import PageHeader from '../../components/common/PageHeader';
 import Button from '../../components/common/Button';
 
 const EnrolledCourses = () => {
   const navigate = useNavigate();
-  const userName = localStorage.getItem('userName') || 'Student';
   const [enrollments, setEnrollments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -38,50 +38,23 @@ const EnrolledCourses = () => {
     }
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <StudentHeader />
+        <div className="flex items-center justify-center py-8">
+          <p className="text-gray-600">Loading courses...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <GraduationCap className="w-6 h-6 text-yellow-600" />
-            <h1 className="text-2xl font-bold text-gray-800">Student Portal</h1>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="text-gray-600">Welcome, <strong>{userName}</strong></span>
-            <Button onClick={handleLogout} variant="outline">
-              Logout
-            </Button>
-          </div>
-        </div>
-      </header>
+      <StudentHeader />
+      <PageHeader title="My Enrolled Courses" icon={BookOpen} backTo="/student/dashboard" />
 
-      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-8">
-        <div className="mb-8">
-          <Button 
-            onClick={() => navigate('/student/dashboard')} 
-            variant="outline"
-            className="mb-4"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Dashboard
-          </Button>
-          <h2 className="text-3xl font-bold text-gray-800 mb-2">My Enrolled Courses</h2>
-          <p className="text-gray-600">View and manage your enrolled courses</p>
-        </div>
-
-        {loading && (
-          <div className="text-center py-8">
-            <p className="text-gray-600">Loading your courses...</p>
-          </div>
-        )}
-
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
             {error}

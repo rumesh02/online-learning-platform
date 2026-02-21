@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, User, ArrowLeft, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { BookOpen, User, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import StudentHeader from '../../components/common/StudentHeader';
+import PageHeader from '../../components/common/PageHeader';
 import Button from '../../components/common/Button';
 
 const BrowseCourses = () => {
@@ -59,23 +61,19 @@ const BrowseCourses = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Loading courses...</p>
+      <div className="min-h-screen bg-gray-50">
+        <StudentHeader />
+        <div className="flex items-center justify-center py-8">
+          <p className="text-gray-600">Loading courses...</p>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center gap-4">
-          <button onClick={() => navigate('/student/dashboard')} className="text-gray-600 hover:text-gray-800">
-            <ArrowLeft className="w-6 h-6" />
-          </button>
-          <BookOpen className="w-6 h-6 text-yellow-600" />
-          <h1 className="text-2xl font-bold text-gray-800">Browse Courses</h1>
-        </div>
-      </header>
+      <StudentHeader />
+      <PageHeader title="Browse Courses" icon={BookOpen} backTo="/student/dashboard" />
 
       <main className="max-w-7xl mx-auto px-4 py-8">
         {courses.length === 0 ? (
