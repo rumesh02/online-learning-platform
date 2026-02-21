@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { GraduationCap, UserRoundPen } from 'lucide-react';
 import RoleCard from '../../components/common/RoleCard';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
@@ -50,6 +51,7 @@ const Signup = () => {
       
       if (response.ok) {
         localStorage.setItem('token', data.token);
+        localStorage.setItem('userName', data.user.name);
         navigate(selectedRole === 'student' ? '/student/dashboard' : '/instructor/dashboard');
       } else {
         alert(data.message || 'Registration failed');
@@ -70,13 +72,13 @@ const Signup = () => {
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <RoleCard
                 role="Student"
-                icon="🎓"
+                icon={GraduationCap}
                 description="Learn from expert instructors and grow your skills"
                 onClick={() => handleRoleSelect('student')}
               />
               <RoleCard
                 role="Instructor"
-                icon="👨‍🏫"
+                icon={UserRoundPen}
                 description="Share your knowledge and teach students worldwide"
                 onClick={() => handleRoleSelect('instructor')}
               />
