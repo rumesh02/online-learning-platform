@@ -80,9 +80,9 @@ const StudentDashboard = () => {
               <p className="text-sm text-gray-600">Discover new learning opportunities</p>
             </button>
             
-            <button className="p-4 border-2 border-gray-200 rounded-lg hover:border-yellow-500 hover:bg-yellow-50 transition-all text-left">
+            <button onClick={() => navigate('/student/enrolled-courses')} className="p-4 border-2 border-gray-200 rounded-lg hover:border-yellow-500 hover:bg-yellow-50 transition-all text-left">
               <FileEdit className="w-8 h-8 mb-2 text-yellow-600" />
-              <h4 className="font-semibold text-gray-800">My Courses</h4>
+              <h4 className="font-semibold text-gray-800">Enrolled Courses</h4>
               <p className="text-sm text-gray-600">View and manage your enrolled courses</p>
             </button>
           </div>
