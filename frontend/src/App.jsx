@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Signup from './pages/auth/Signup';
 import Login from './pages/auth/Login';
 import StudentDashboard from './pages/student/StudentDashboard';
+import BrowseCourses from './pages/student/BrowseCourses';
 import InstructorDashboard from './pages/instructor/InstructorDashboard';
 import CreateCourse from './pages/instructor/CreateCourse';
 import MyCourses from './pages/instructor/MyCourses';
@@ -36,6 +37,15 @@ function App() {
           element={
             <ProtectedRoute allowedRole="student">
               <StudentDashboard />
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/student/browse-courses"
+          element={
+            <ProtectedRoute allowedRole="student">
+              <BrowseCourses />
             </ProtectedRoute>
           }
         />
