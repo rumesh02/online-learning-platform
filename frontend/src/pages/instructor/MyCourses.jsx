@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Users, Edit2, X } from 'lucide-react';
+import { BookOpen, Users, Edit2, X, Trash2 } from 'lucide-react';
 import InstructorHeader from '../../components/common/InstructorHeader';
 import PageHeader from '../../components/common/PageHeader';
 import Button from '../../components/common/Button';
@@ -13,6 +13,7 @@ const MyCourses = () => {
   const [viewingStudents, setViewingStudents] = useState(null);
   const [students, setStudents] = useState([]);
   const [notification, setNotification] = useState(null);
+  const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
     category: '',
@@ -97,6 +98,34 @@ const MyCourses = () => {
     }
   };
 
+  const handleDeleteCourse = async (courseId, courseTitle) => {
+    setDeleteConfirm({ id: courseId, title: courseTitle });
+  };
+
+  const confirmDelete = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:5000/api/courses/${deleteConfirm.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      const result = await response.json();
+      if (result.success) {
+        fetchMyCourses();
+        setNotification({ type: 'success', message: 'Course deleted successfully!' });
+        setTimeout(() => setNotification(null), 4000);
+      }
+    } catch (error) {
+      console.error('Error deleting course:', error);
+      setNotification({ type: 'error', message: 'Failed to delete course' });
+      setTimeout(() => setNotification(null), 4000);
+    } finally {
+      setDeleteConfirm(null);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -115,6 +144,32 @@ const MyCourses = () => {
             : 'border-rose-500 text-rose-700'
         }`}>
           <p className="font-medium">{notification.message}</p>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deleteConfirm && (
+        <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-2xl p-6 max-w-md w-full mx-4">
+            <h3 className="text-xl font-bold text-gray-800 mb-2">Delete Course?</h3>
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to delete <span className="font-semibold">"{deleteConfirm.title}"</span>? This action cannot be undone.
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => setDeleteConfirm(null)}
+                className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDelete}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
         </div>
       )}
       
@@ -189,12 +244,20 @@ const MyCourses = () => {
                           {course.category}
                         </span>
                       </div>
-                      <button
-                        onClick={() => handleEditClick(course)}
-                        className="text-gray-600 hover:text-yellow-600 transition-colors"
-                      >
-                        <Edit2 className="w-5 h-5" />
-                      </button>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => handleEditClick(course)}
+                          className="text-yellow-600 hover:text-yellow-700 transition-colors"
+                        >
+                          <Edit2 className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteCourse(course._id, course.title)}
+                          className="text-red-600 hover:text-red-800 transition-colors"
+                        >
+                          <Trash2 className="w-5 h-5" />
+                        </button>
+                      </div>
                     </div>
                     <p className="text-gray-600 mb-4">{course.description}</p>
                     <div className="bg-gray-50 rounded-lg p-4 mb-4">
