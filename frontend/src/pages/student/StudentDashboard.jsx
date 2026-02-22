@@ -1,10 +1,41 @@
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { BookOpen, CheckCircle, BookOpenCheck, Search, FileEdit, Sparkles } from 'lucide-react';
 import StudentHeader from '../../components/common/StudentHeader';
 import Button from '../../components/common/Button';
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
+  const [stats, setStats] = useState({
+    enrolled: 0,
+    completed: 0,
+    inProgress: 0
+  });
+
+  useEffect(() => {
+    const fetchEnrollments = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://localhost:5000/api/enrollments/my-enrollments', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const result = await response.json();
+        
+        if (result.success) {
+          const enrollments = result.data;
+          setStats({
+            enrolled: enrollments.length,
+            completed: enrollments.filter(e => e.status === 'completed').length,
+            inProgress: enrollments.filter(e => e.status === 'enrolled').length
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching enrollments:', error);
+      }
+    };
+
+    fetchEnrollments();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -23,7 +54,7 @@ const StudentDashboard = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-600 text-sm mb-1">Enrolled Courses</p>
-                <p className="text-3xl font-bold text-gray-800">0</p>
+                <p className="text-3xl font-bold text-gray-800">{stats.enrolled}</p>
               </div>
               <BookOpen className="w-10 h-10 text-yellow-600" />
             </div>
@@ -33,7 +64,7 @@ const StudentDashboard = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-600 text-sm mb-1">Completed</p>
-                <p className="text-3xl font-bold text-gray-800">0</p>
+                <p className="text-3xl font-bold text-gray-800">{stats.completed}</p>
               </div>
               <CheckCircle className="w-10 h-10 text-yellow-600" />
             </div>
@@ -43,7 +74,7 @@ const StudentDashboard = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-600 text-sm mb-1">In Progress</p>
-                <p className="text-3xl font-bold text-gray-800">0</p>
+                <p className="text-3xl font-bold text-gray-800">{stats.inProgress}</p>
               </div>
               <BookOpenCheck className="w-10 h-10 text-yellow-600" />
             </div>
