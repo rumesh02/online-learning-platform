@@ -11,6 +11,7 @@ const EnrolledCourses = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [selectedEnrollment, setSelectedEnrollment] = useState(null);
+  const [deleteConfirm, setDeleteConfirm] = useState(null);
 
   useEffect(() => {
     fetchEnrolledCourses();
@@ -65,8 +66,9 @@ const EnrolledCourses = () => {
     }
   };
 
-  const handleDelete = async (enrollmentId) => {
-    if (!confirm('Are you sure you want to delete this enrollment?')) return;
+  const confirmDelete = async () => {
+    const enrollmentId = deleteConfirm;
+    setDeleteConfirm(null);
 
     try {
       const token = localStorage.getItem('token');
@@ -81,6 +83,7 @@ const EnrolledCourses = () => {
 
       if (data.success) {
         setEnrollments(enrollments.filter(e => e._id !== enrollmentId));
+        setSelectedEnrollment(null);
       } else {
         setError(data.message || 'Failed to delete enrollment');
       }
@@ -242,16 +245,44 @@ const EnrolledCourses = () => {
                     </button>
                   )}
                   <button
-                    onClick={() => {
-                      handleDelete(selectedEnrollment._id);
-                      setSelectedEnrollment(null);
-                    }}
+                    onClick={() => setDeleteConfirm(selectedEnrollment._id)}
                     className="bg-rose-500 hover:bg-rose-600 text-white px-4 py-3 rounded-lg font-medium transition-all shadow-sm hover:shadow flex items-center justify-center gap-2"
                   >
                     <Trash2 className="w-5 h-5" />
                     Delete Enrollment
                   </button>
                 </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Delete Confirmation Modal */}
+        {deleteConfirm && (
+          <div className="fixed inset-0 backdrop-blur-sm bg-opacity-30 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="bg-rose-100 p-2 rounded-lg">
+                  <Trash2 className="w-6 h-6 text-rose-600" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900">Delete Enrollment</h3>
+              </div>
+              <p className="text-gray-600 mb-6">
+                Are you sure you want to delete this enrollment? This action cannot be undone.
+              </p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setDeleteConfirm(null)}
+                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={confirmDelete}
+                  className="flex-1 bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                >
+                  Delete
+                </button>
               </div>
             </div>
           </div>

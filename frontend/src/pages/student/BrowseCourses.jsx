@@ -11,6 +11,7 @@ const BrowseCourses = () => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCourse, setSelectedCourse] = useState(null);
+  const [notification, setNotification] = useState(null);
   const coursesPerPage = 10;
 
   useEffect(() => {
@@ -42,14 +43,17 @@ const BrowseCourses = () => {
       });
       const result = await response.json();
       if (result.success) {
-        alert('Successfully enrolled in the course!');
+        setNotification({ type: 'success', message: 'You successfully enrolled in the course!' });
         setSelectedCourse(null);
+        setTimeout(() => setNotification(null), 4000);
       } else {
-        alert(result.message || 'Failed to enroll');
+        setNotification({ type: 'error', message: result.message || 'Failed to enroll!' });
+        setTimeout(() => setNotification(null), 4000);
       }
     } catch (error) {
       console.error('Error enrolling:', error);
-      alert('Failed to enroll in the course');
+      setNotification({ type: 'error', message: 'Failed to enroll in the course!' });
+      setTimeout(() => setNotification(null), 4000);
     }
   };
 
@@ -72,6 +76,17 @@ const BrowseCourses = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Notification Banner */}
+      {notification && (
+        <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-lg shadow-xl bg-white border-2 ${
+          notification.type === 'success' 
+            ? 'border-emerald-500 text-emerald-700' 
+            : 'border-rose-500 text-rose-700'
+        }`}>
+          <p className="font-medium">{notification.message}</p>
+        </div>
+      )}
+      
       <StudentHeader />
       <PageHeader title="Browse Courses" icon={BookOpen} backTo="/student/dashboard" />
 

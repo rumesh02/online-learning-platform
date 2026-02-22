@@ -12,6 +12,7 @@ const MyCourses = () => {
   const [editingCourse, setEditingCourse] = useState(null);
   const [viewingStudents, setViewingStudents] = useState(null);
   const [students, setStudents] = useState([]);
+  const [notification, setNotification] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
     category: '',
@@ -68,11 +69,13 @@ const MyCourses = () => {
       if (result.success) {
         setEditingCourse(null);
         fetchMyCourses();
-        alert('Course updated successfully!');
+        setNotification({ type: 'success', message: 'Course updated successfully!' });
+        setTimeout(() => setNotification(null), 4000);
       }
     } catch (error) {
       console.error('Error updating course:', error);
-      alert('Failed to update course');
+      setNotification({ type: 'error', message: 'Failed to update course' });
+      setTimeout(() => setNotification(null), 4000);
     }
   };
 
@@ -104,6 +107,17 @@ const MyCourses = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Notification Banner */}
+      {notification && (
+        <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-lg shadow-xl bg-white border-2 ${
+          notification.type === 'success' 
+            ? 'border-emerald-500 text-emerald-700' 
+            : 'border-rose-500 text-rose-700'
+        }`}>
+          <p className="font-medium">{notification.message}</p>
+        </div>
+      )}
+      
       <InstructorHeader />
       <PageHeader title="My Courses" icon={BookOpen} backTo="/instructor/dashboard" />
 
