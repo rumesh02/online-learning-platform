@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BookOpen, User, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import StudentHeader from '../../components/common/StudentHeader';
+import { getApiUrl } from '../../config/api';
 import PageHeader from '../../components/common/PageHeader';
 import Button from '../../components/common/Button';
 
@@ -20,7 +21,7 @@ const BrowseCourses = () => {
 
   const fetchCourses = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/courses');
+      const response = await fetch(getApiUrl('/api/courses'));
       const result = await response.json();
       if (result.success) {
         setCourses(result.data);
@@ -35,7 +36,7 @@ const BrowseCourses = () => {
   const handleEnroll = async (courseId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/enrollments/${courseId}`, {
+      const response = await fetch(getApiUrl(`/api/enrollments/${courseId}`), {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
