@@ -52,7 +52,10 @@ exports.enrollInCourse = async (req, res) => {
 exports.getMyEnrollments = async (req, res) => {
   try {
     const enrollments = await Enrollment.find({ student: req.user._id })
-      .populate('course', 'title category description')
+      .populate({
+        path: 'course',
+        populate: { path: 'instructor', select: 'name email' }
+      })
       .sort({ enrolledAt: -1 });
 
     res.status(200).json({
@@ -83,6 +86,73 @@ exports.getCourseEnrollments = async (req, res) => {
       success: true,
       count: enrollments.length,
       data: enrollments
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+// @desc    Update enrollment status
+// @route   PATCH /api/enrollments/:enrollmentId/status
+// @access  Private (Student only)
+exports.updateEnrollmentStatus = async (req, res) => {
+  try {
+    const { enrollmentId } = req.params;
+    const { status } = req.body;
+
+    const enrollment = await Enrollment.findOne({ 
+      _id: enrollmentId, 
+      student: req.user._id 
+    });
+
+    if (!enrollment) {
+      return res.status(404).json({
+        success: false,
+        message: 'Enrollment not found'
+      });
+    }
+
+    enrollment.status = status;
+    await enrollment.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Enrollment status updated',
+      data: enrollment
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+// @desc    Delete enrollment
+// @route   DELETE /api/enrollments/:enrollmentId
+// @access  Private (Student only)
+exports.deleteEnrollment = async (req, res) => {
+  try {
+    const { enrollmentId } = req.params;
+
+    const enrollment = await Enrollment.findOneAndDelete({ 
+      _id: enrollmentId, 
+      student: req.user._id 
+    });
+
+    if (!enrollment) {
+      return res.status(404).json({
+        success: false,
+        message: 'Enrollment not found'
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Enrollment deleted successfully'
     });
   } catch (error) {
     res.status(500).json({
