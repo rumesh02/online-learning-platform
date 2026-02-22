@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { BookOpen, CheckCircle, BookOpenCheck, Search, FileEdit, Sparkles } from 'lucide-react';
 import StudentHeader from '../../components/common/StudentHeader';
+import { getApiUrl } from '../../config/api';
 import Button from '../../components/common/Button';
 
 const StudentDashboard = () => {
@@ -16,7 +17,7 @@ const StudentDashboard = () => {
     const fetchEnrollments = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:5000/api/enrollments/my-enrollments', {
+        const response = await fetch(getApiUrl('/api/enrollments/my-enrollments'), {
           headers: { Authorization: `Bearer ${token}` }
         });
         const result = await response.json();

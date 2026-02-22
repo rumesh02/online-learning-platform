@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BookOpen, CheckCircle, Trash2, X } from 'lucide-react';
 import StudentHeader from '../../components/common/StudentHeader';
+import { getApiUrl } from '../../config/api';
 import PageHeader from '../../components/common/PageHeader';
 import Button from '../../components/common/Button';
 
@@ -20,7 +21,7 @@ const EnrolledCourses = () => {
   const fetchEnrolledCourses = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/enrollments/my-enrollments', {
+      const response = await fetch(getApiUrl('/api/enrollments/my-enrollments'), {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -43,7 +44,7 @@ const EnrolledCourses = () => {
   const handleMarkComplete = async (enrollmentId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/enrollments/${enrollmentId}/status`, {
+      const response = await fetch(getApiUrl(`/api/enrollments/${enrollmentId}/status`), {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -72,7 +73,7 @@ const EnrolledCourses = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/enrollments/${enrollmentId}`, {
+      const response = await fetch(getApiUrl(`/api/enrollments/${enrollmentId}`), {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

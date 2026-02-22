@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sparkles, Loader2, ArrowLeft, BookOpen, Target } from 'lucide-react';
 import StudentHeader from '../../components/common/StudentHeader';
+import { getApiUrl } from '../../config/api';
 import Button from '../../components/common/Button';
 
 const AICourseSuggestions = () => {
@@ -30,7 +31,7 @@ const AICourseSuggestions = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/recommendations/courses', {
+      const response = await fetch(getApiUrl('/api/recommendations/courses'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
