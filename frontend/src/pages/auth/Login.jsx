@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GraduationCap, UserRoundPen } from 'lucide-react';
 import RoleCard from '../../components/common/RoleCard';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
@@ -62,13 +61,13 @@ const Login = () => {
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <RoleCard
                 role="Student"
-                icon={GraduationCap}
+                icon="/images/student.png"
                 description="Access your courses and continue learning"
                 onClick={() => handleRoleSelect('student')}
               />
               <RoleCard
                 role="Instructor"
-                icon={UserRoundPen}
+                icon="/images/instructor.png"
                 description="Manage your courses and students"
                 onClick={() => handleRoleSelect('instructor')}
               />
