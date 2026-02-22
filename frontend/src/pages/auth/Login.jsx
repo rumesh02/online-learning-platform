@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 import RoleCard from '../../components/common/RoleCard';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
@@ -55,6 +56,13 @@ const Login = () => {
       <div className="max-w-4xl w-full">
         {step === 1 ? (
           <div>
+            <button
+              onClick={() => navigate('/')}
+              className="text-gray-600 hover:text-gray-800 mb-6 flex items-center"
+            >
+              <ArrowLeft className="w-5 h-5 mr-2" />
+              Back to Home
+            </button>
             <h1 className="text-4xl font-bold text-center text-gray-800 mb-3">Welcome Back</h1>
             <p className="text-center text-gray-600 mb-10">Select your role to continue</p>
             
@@ -88,7 +96,7 @@ const Login = () => {
               onClick={() => setStep(1)}
               className="text-gray-600 hover:text-gray-800 mb-4 flex items-center"
             >
-              ← Back to role selection
+              <ArrowLeft className="w-6 h-6 text-yellow-600 mr-2" />Back to role selection
             </button>
             
             <h2 className="text-3xl font-bold text-gray-800 mb-2">Login as {selectedRole}</h2>
