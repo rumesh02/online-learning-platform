@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 import RoleCard from '../../components/common/RoleCard';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
@@ -93,18 +94,19 @@ const Signup = () => {
             </div>
           </div>
         ) : (
-          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md mx-auto">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-4xl mx-auto">
             <button
               onClick={() => setStep(1)}
               className="text-gray-600 hover:text-gray-800 mb-4 flex items-center"
             >
-              ← Back to role selection
+              <ArrowLeft className="w-6 h-6 text-yellow-600 mr-2" />Back to role selection
             </button>
             
             <h2 className="text-3xl font-bold text-gray-800 mb-2">Register as {selectedRole}</h2>
             <p className="text-gray-600 mb-6">Fill in your details to create your account</p>
 
             <form onSubmit={handleSubmit}>
+              {/* Full Name - Full Width */}
               <Input
                 label="Full Name"
                 name="name"
@@ -114,44 +116,50 @@ const Signup = () => {
                 required
               />
               
-              <Input
-                label="Username"
-                name="username"
-                value={formData.username}
-                onChange={handleInputChange}
-                placeholder="Enter username"
-                required
-              />
+              {/* Username and Email - Side by Side */}
+              <div className="grid grid-cols-2 gap-4">
+                <Input
+                  label="Username"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleInputChange}
+                  placeholder="Enter username"
+                  required
+                />
+                
+                <Input
+                  label="Email"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder="name@example.com"
+                  required
+                />
+              </div>
               
-              <Input
-                label="Email"
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="name@example.com"
-                required
-              />
-              
-              <Input
-                label="Password"
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                placeholder="••••••••"
-                required
-              />
-              
-              <Input
-                label="Confirm Password"
-                type="password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleInputChange}
-                placeholder="••••••••"
-                required
-              />
+              {/* Password and Confirm Password - Side by Side */}
+              <div className="grid grid-cols-2 gap-4">
+                <Input
+                  label="Password"
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  placeholder="••••••••"
+                  required
+                />
+                
+                <Input
+                  label="Confirm Password"
+                  type="password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleInputChange}
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
 
               <Button type="submit" className="w-full mt-6">
                 Create Account
