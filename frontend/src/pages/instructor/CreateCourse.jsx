@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BookOpen } from 'lucide-react';
 import InstructorHeader from '../../components/common/InstructorHeader';
+import { getApiUrl } from '../../config/api';
 import PageHeader from '../../components/common/PageHeader';
 import Button from '../../components/common/Button';
 import Input from '../../components/common/Input';
@@ -33,7 +34,7 @@ const CreateCourse = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/courses', {
+      const response = await fetch(getApiUrl('/api/courses'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

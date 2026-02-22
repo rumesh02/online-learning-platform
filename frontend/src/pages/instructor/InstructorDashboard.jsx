@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { BookOpen, Users, BookOpenCheck, Plus, FileEdit } from 'lucide-react';
 import InstructorHeader from '../../components/common/InstructorHeader';
+import { getApiUrl } from '../../config/api';
 import Button from '../../components/common/Button';
 
 const InstructorDashboard = () => {
@@ -17,7 +18,7 @@ const InstructorDashboard = () => {
         const token = localStorage.getItem('token');
         
         // Fetch instructor's courses
-        const coursesRes = await fetch('http://localhost:5000/api/courses/my-courses', {
+        const coursesRes = await fetch(getApiUrl('/api/courses/my-courses'), {
           headers: { Authorization: `Bearer ${token}` }
         });
         const coursesData = await coursesRes.json();
@@ -29,7 +30,7 @@ const InstructorDashboard = () => {
           // Fetch enrollments for each course to count unique students
           const studentIds = new Set();
           for (const course of courses) {
-            const enrollRes = await fetch(`http://localhost:5000/api/enrollments/course/${course._id}`, {
+            const enrollRes = await fetch(getApiUrl(`/api/enrollments/course/${course._id}`), {
               headers: { Authorization: `Bearer ${token}` }
             });
             const enrollData = await enrollRes.json();

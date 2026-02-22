@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BookOpen, Users, Edit2, X, Trash2 } from 'lucide-react';
 import InstructorHeader from '../../components/common/InstructorHeader';
+import { getApiUrl } from '../../config/api';
 import PageHeader from '../../components/common/PageHeader';
 import Button from '../../components/common/Button';
 
@@ -28,7 +29,7 @@ const MyCourses = () => {
   const fetchMyCourses = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/courses/my-courses', {
+      const response = await fetch(getApiUrl('/api/courses/my-courses'), {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -58,7 +59,7 @@ const MyCourses = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/courses/${editingCourse}`, {
+      const response = await fetch(getApiUrl(`/api/courses/${editingCourse}`), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -83,7 +84,7 @@ const MyCourses = () => {
   const handleViewStudents = async (courseId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/enrollments/course/${courseId}`, {
+      const response = await fetch(getApiUrl(`/api/enrollments/course/${courseId}`), {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -105,7 +106,7 @@ const MyCourses = () => {
   const confirmDelete = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/courses/${deleteConfirm.id}`, {
+      const response = await fetch(getApiUrl(`/api/courses/${deleteConfirm.id}`), {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
