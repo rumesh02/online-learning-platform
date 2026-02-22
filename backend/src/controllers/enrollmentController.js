@@ -27,7 +27,7 @@ exports.enrollInCourse = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: 'Successfully enrolled in course',
+      message: 'Successfully enrolled in course!',
       data: enrollment
     });
   } catch (error) {
@@ -35,7 +35,7 @@ exports.enrollInCourse = async (req, res) => {
     if (error.code === 11000) {
       return res.status(400).json({
         success: false,
-        message: 'You are already enrolled in this course'
+        message: 'You are already enrolled in this course!'
       });
     }
 

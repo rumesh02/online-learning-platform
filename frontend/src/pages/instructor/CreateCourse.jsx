@@ -10,6 +10,7 @@ const CreateCourse = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [notification, setNotification] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
     category: '',
@@ -44,8 +45,10 @@ const CreateCourse = () => {
       const data = await response.json();
 
       if (data.success) {
-        // Success! Navigate back to dashboard
-        navigate('/instructor/dashboard');
+        setNotification({ type: 'success', message: 'Course created successfully!' });
+        setTimeout(() => {
+          navigate('/instructor/my-courses');
+        }, 1500);
       } else {
         setError(data.message || 'Failed to create course');
       }
@@ -58,6 +61,17 @@ const CreateCourse = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Notification Banner */}
+      {notification && (
+        <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-lg shadow-xl bg-white border-2 ${
+          notification.type === 'success' 
+            ? 'border-emerald-500 text-emerald-700' 
+            : 'border-rose-500 text-rose-700'
+        }`}>
+          <p className="font-medium">{notification.message}</p>
+        </div>
+      )}
+      
       <InstructorHeader />
       <PageHeader title="Create New Course" icon={BookOpen} backTo="/instructor/dashboard" />
 
@@ -76,13 +90,13 @@ const CreateCourse = () => {
             {/* Title */}
             <div>
               <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
-                Course Title *
+                Course Title
               </label>
               <Input
                 id="title"
                 name="title"
                 type="text"
-                placeholder="e.g., Introduction to React Development"
+                placeholder="ex:- Introduction to React Development"
                 value={formData.title}
                 onChange={handleChange}
                 required
@@ -92,7 +106,7 @@ const CreateCourse = () => {
             {/* Category */}
             <div>
               <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-2">
-                Category *
+                Category
               </label>
               <select
                 id="category"
@@ -117,7 +131,7 @@ const CreateCourse = () => {
             {/* Description */}
             <div>
               <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
-                Description *
+                Description
               </label>
               <textarea
                 id="description"
@@ -134,7 +148,7 @@ const CreateCourse = () => {
             {/* Content */}
             <div>
               <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-2">
-                Course Content *
+                Course Content
               </label>
               <textarea
                 id="content"
