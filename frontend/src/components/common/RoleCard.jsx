@@ -1,4 +1,7 @@
-const RoleCard = ({ role, icon: Icon, description, onClick, selected = false }) => {
+const RoleCard = ({ role, icon, description, onClick, selected = false }) => {
+  const isImagePath = typeof icon === 'string';
+  const Icon = !isImagePath ? icon : null;
+
   return (
     <div
       onClick={onClick}
@@ -9,7 +12,11 @@ const RoleCard = ({ role, icon: Icon, description, onClick, selected = false }) 
       }`}
     >
       <div className="flex justify-center mb-4">
-        <Icon className="w-16 h-16" />
+        {isImagePath ? (
+          <img src={icon} alt={role} className="w-16 h-16 object-contain" />
+        ) : (
+          <Icon className="w-16 h-16" />
+        )}
       </div>
       <h3 className="text-2xl font-bold text-center mb-2">{role}</h3>
       <p className={`text-center ${selected ? 'text-gray-800' : 'text-gray-600'}`}>
