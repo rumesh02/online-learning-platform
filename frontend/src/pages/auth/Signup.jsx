@@ -55,7 +55,13 @@ const Signup = () => {
         localStorage.setItem('userName', data.user.name);
         navigate(selectedRole === 'student' ? '/student/dashboard' : '/instructor/dashboard');
       } else {
-        alert(data.message || 'Registration failed');
+        // Show validation errors if they exist
+        if (data.errors && data.errors.length > 0) {
+          const errorMessages = data.errors.map(err => err.msg).join('\n');
+          alert(errorMessages);
+        } else {
+          alert(data.message || 'Registration failed');
+        }
       }
     } catch (error) {
       alert('Error connecting to server');
